@@ -1,6 +1,6 @@
 import json
 
-with open("Sem movimento_Pedro.json", "r", encoding="utf-8") as f:
+with open("Directory.json", "r", encoding="utf-8") as f:
     dados = json.load(f)
 
 for item in dados["empresas"]:
