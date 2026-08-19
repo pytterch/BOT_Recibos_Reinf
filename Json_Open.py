@@ -1,7 +1,7 @@
 import json
 
-with open("Directory.json", "r", encoding="utf-8") as f:
+with open("modificado.json", "r", encoding="utf-8") as f:
     dados = json.load(f)
 
-for item in dados["empresas"]:
+for item in dados["Empresas"]:
     item[1] = item[1].lstrip("0")

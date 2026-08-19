@@ -10,7 +10,7 @@ while True:
         acesso_remoto()
         system()
         
-        for nome, cod in dados["empresas"]:
+        for nome, cod in dados["Empresas"]:
             print(f"Entrando na empresa {nome} 🏢")
             print(".\n.\n")
             navegar_dominio(cod)
@@ -51,7 +51,7 @@ while True:
             print(".\n.\n")
             system()
 
-            for nome, cod in dados["empresas"]:
+            for nome, cod in dados["Empresas"]:
                 cod.lstrip("0")
                 print(f"Entrando na empresa {nome} 🏢")
                 print(".\n.\n")

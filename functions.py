@@ -5,8 +5,19 @@ from time import sleep
 import os
 from functions_reserve import *
 
-OFFSET_X = 1050
+OFFSET_X = 700
 
+def localizar_erro():
+    for conf in [0.80, 0.75, 0.70]:
+        try:
+            return pyautogui.locateCenterOnScreen(
+                "erro.png",
+                confidence=conf,
+                grayscale=True
+            )
+        except pyautogui.ImageNotFoundException:
+            continue
+    return None
 # Nessa função nós localizamos e clicamos apenas no fechamento R-2099
 def localizar_R2099():
     for conf in [0.80, 0.75, 0.70]:
@@ -95,10 +106,10 @@ def system():
     sleep(6)
     press("enter")
     sleep(10)
-    write("Hemera123", 0.05)
+    write("HEMERA123", 0.05)
     sleep(1)
     press("enter")
-    sleep(55)
+    sleep(38)
 
 def navegar_dominio(cod):
     press("F")
@@ -151,8 +162,11 @@ def voltar():
 def imprimir(cod, nome, evento):
     sleep(3)
     hotkey("Ctrl", "d")
-    sleep(4)
-    write(f"H:\\B - Obrigacoes Acessorias\\REINF\\{dataano()}\\RECIBOS\\{data()}\\Teste\\{cod} - {nome} - REINF {evento} {datames()}", 0.02)
+    sleep(2)
+    if localizar_erro():
+        press("enter")
+    sleep(2)
+    write(f"H:\\B - Obrigacoes Acessorias\\REINF\\{dataano()}\\RECIBOS\\{data()}\\JULIA\\{cod} - {nome} - REINF {evento} {datames()}", 0.02)
     sleep(2)
     press("enter")
     sleep(8)
