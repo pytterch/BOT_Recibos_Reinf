@@ -1,5 +1,5 @@
 import datetime
-import psutil
+import pyautogui
 
 def mes_anterior():
     agora = datetime.datetime.today()
@@ -17,8 +17,15 @@ def data():
 def dataano():
     return str(competencia.strftime("%Y"))
 
-def VPN(nome_processo):
-    for processo in psutil.process_iter(["name"]):
-        if nome_processo.lower() in processo.info["name"].lower():
-            return True
-    return False
+# Lê a mensagem de erro caso apareça na tela
+def localizar_erro():
+    for conf in [0.80, 0.75, 0.70]:
+        try:
+            return pyautogui.locateCenterOnScreen(
+                "erro.png",
+                confidence=conf,
+                grayscale=True
+            )
+        except pyautogui.ImageNotFoundException:
+            continue
+    return None

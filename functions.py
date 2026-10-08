@@ -1,25 +1,14 @@
-import pyautogui
 import pyscreeze
 from pyautogui import hotkey, write, press
+
+from Recibos_REINF.Json_Open import grupos, escolha
+from functions_reserve import *
 from time import sleep
 import os
-from functions_reserve import *
-
 OFFSET_X = 700
 
-def localizar_erro():
-    for conf in [0.80, 0.75, 0.70]:
-        try:
-            return pyautogui.locateCenterOnScreen(
-                "erro.png",
-                confidence=conf,
-                grayscale=True
-            )
-        except pyautogui.ImageNotFoundException:
-            continue
-    return None
 # Nessa função nós localizamos e clicamos apenas no fechamento R-2099
-def localizar_R2099():
+def localizar_r2099():
     for conf in [0.80, 0.75, 0.70]:
         try:
             return pyautogui.locateCenterOnScreen(
@@ -31,8 +20,8 @@ def localizar_R2099():
             continue
     return None
 
-def clicar_evento_R2099():
-    fechamento = localizar_R2099()
+def clicar_evento_r2099():
+    fechamento = localizar_r2099()
 
     if not fechamento:
         print("Nenhum Fechamento encontrado.")
@@ -46,7 +35,7 @@ def clicar_evento_R2099():
     return True
 
 # Nessa função nós localizamos e clicamos apenas no fechamento R-4099
-def localizar_R4099():
+def localizar_r4099():
     for conf in [0.75]:
         try:
             resultados = list(pyautogui.locateAllOnScreen(
@@ -67,8 +56,8 @@ def localizar_R4099():
     centro_y = ultimo.top + ultimo.height // 2
     return pyautogui.Point(x=centro_x, y=centro_y)
 
-def clicar_evento_R4099():
-    fechamento = localizar_R4099()
+def clicar_evento_r4099():
+    fechamento = localizar_r4099()
 
     if not fechamento:
         print("Nenhum Fechamento encontrado.")
@@ -81,47 +70,38 @@ def clicar_evento_R4099():
     print(f"Clicando no Evento 🕹️")
     return True
 
-# Nessa função entramos no Acesso Remoto
-def acesso_remoto():
-    os.startfile("mstsc.exe")
-    sleep(3)
-    press("enter")
-    sleep(4)
-    press("enter")
-    sleep(2)
-    press("tab")
-    sleep(1)
-    write("Pedrosilva2212", 0.05)
-    sleep(1)
-    press("enter")
-    sleep(3)
-
 # Função para entrar e navegar no sistema Domínio
+def append_pasta():
+    pasta_origem = f"H:\\B - Obrigacoes Acessorias\\REINF\\2026\\RECIBOS\\{data()}\\{escolha}"
+    subpasta = f"{data()}\\{escolha}"
+    if not os.path.exists(pasta_origem):
+        os.makedirs(pasta_origem)
+    else:
+        print("A pasta já existe")
 def system():
     hotkey("alt", "enter")
     sleep(1)
     press("Win")
     sleep(2)
     write("Aplicativos:Dominio Escrita Fiscal.exe", 0.05)
-    sleep(6)
+    sleep(2)
     press("enter")
-    sleep(10)
+    sleep(6)
     write("HEMERA123", 0.05)
     sleep(1)
     press("enter")
-    sleep(38)
+    sleep(40)
 
 def navegar_dominio(cod):
+    cod_dominio = cod.lstrip("0")
     press("F")
     sleep(2)
-    sleep(1)
     press('f8')
     sleep(2)
-    write(cod)
+    write(cod_dominio)
     sleep(1)
     press("enter")
     sleep(12)
-    pyautogui.click(x= 1050, y= 307)
     press("alt")
     sleep(1)
     press('r')
@@ -159,14 +139,14 @@ def navegar_dominio(cod):
 def voltar():
     press("esc", 4)
 # Nessa função Imprimimos o Recibo e baixamos na pasta teste por enquanto
-def imprimir(cod, nome, evento):
+def imprimir(cod, nome, evento, grupo):
     sleep(3)
     hotkey("Ctrl", "d")
     sleep(2)
     if localizar_erro():
         press("enter")
     sleep(2)
-    write(f"H:\\B - Obrigacoes Acessorias\\REINF\\{dataano()}\\RECIBOS\\{data()}\\JULIA\\{cod} - {nome} - REINF {evento} {datames()}", 0.02)
+    write(f"H:\\B - Obrigacoes Acessorias\\REINF\\{dataano()}\\RECIBOS\\{data()}\\{grupo}\\{cod} - {nome} - REINF {evento} {datames()}", 0.02)
     sleep(2)
     press("enter")
     sleep(8)
